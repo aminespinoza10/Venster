@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './SideMenu.css';
 
 interface MenuItem {
@@ -7,8 +7,12 @@ interface MenuItem {
   icon: React.ReactNode;
 }
 
-const SideMenu: React.FC = () => {
-  const [activeItem, setActiveItem] = useState<string>('home');
+interface SideMenuProps {
+  activeSection: string;
+  onNavigate: (sectionId: string) => void;
+}
+
+const SideMenu: React.FC<SideMenuProps> = ({ activeSection, onNavigate }) => {
 
   const HomeIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -64,7 +68,7 @@ const SideMenu: React.FC = () => {
   ];
 
   const handleItemClick = (itemId: string) => {
-    setActiveItem(itemId);
+    onNavigate(itemId);
   };
 
   return (
@@ -73,7 +77,7 @@ const SideMenu: React.FC = () => {
         {menuItems.map((item) => (
           <button
             key={item.id}
-            className={`side-menu-item ${activeItem === item.id ? 'active' : ''}`}
+            className={`side-menu-item ${activeSection === item.id ? 'active' : ''}`}
             onClick={() => handleItemClick(item.id)}
             aria-label={item.label}
           >
