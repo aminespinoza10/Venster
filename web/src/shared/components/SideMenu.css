@@ -1,0 +1,98 @@
+.side-menu {
+  width: 80px;
+  height: 100vh;
+  background-color: #f8f9fa;
+  border-right: 1px solid #e9ecef;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+}
+
+.side-menu-content {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+  gap: 8px;
+}
+
+.side-menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  margin: 0 8px;
+  min-height: 64px;
+  text-decoration: none;
+  color: #6c757d;
+}
+
+.side-menu-item:hover {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.side-menu-item.active {
+  background-color: #d4e6d4;
+  color: #2d5a2d;
+}
+
+.side-menu-item.active .side-menu-icon {
+  color: #2d5a2d;
+}
+
+.side-menu-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+  color: inherit;
+}
+
+.side-menu-icon img {
+  filter: opacity(0.7);
+  transition: filter 0.2s ease;
+}
+
+.side-menu-item:hover .side-menu-icon img,
+.side-menu-item.active .side-menu-icon img {
+  filter: opacity(1);
+}
+
+.side-menu-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+}
+
+.side-menu-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.2;
+  color: inherit;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .side-menu {
+    width: 60px;
+  }
+  
+  .side-menu-item {
+    padding: 10px 4px;
+    min-height: 56px;
+  }
+  
+  .side-menu-label {
+    font-size: 10px;
+  }
+}
