@@ -49,6 +49,9 @@
   justify-content: center;
   width: 44px;
   height: 44px;
+  box-sizing: border-box; /* keep overall size 44x44 when adding padding */
+  padding: 2px; /* create a subtle inner margin so the icon sits inside the circle */
+  line-height: 0; /* avoid extra inline height from baseline */
   background-color: #3b82f6;
   color: white;
   border: none;

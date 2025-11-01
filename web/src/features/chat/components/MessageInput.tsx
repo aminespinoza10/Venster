@@ -49,8 +49,8 @@ const MessageInput: React.FC<MessageInputProps> = ({
         >
           <svg
             viewBox="0 0 24 24"
-            width="100%"
-            height="100%"
+            width="94%"
+            height="94%"
             fill="none"
             stroke="currentColor"
             strokeWidth="2.2"
