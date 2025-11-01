@@ -22,6 +22,7 @@
   font-family: inherit;
   font-size: 0.9rem;
   line-height: 1.5;
+  color: #1f2937; /* ensure readable text even if global theme sets light text */
   outline: none;
   transition: all 0.2s ease;
   background-color: #ffffff;
@@ -73,9 +74,9 @@
   transform: none;
 }
 
-.send-button svg {
-  width: 20px;
-  height: 20px;
+.send-button svg { /* Fallback if inline width/height are removed */
+  width: 100%;
+  height: 100%;
 }
 
 @media (max-width: 768px) {
@@ -97,8 +98,5 @@
     height: 40px;
   }
   
-  .send-button svg {
-    width: 18px;
-    height: 18px;
-  }
+  /* SVG scales with button size via percentage, so no mobile-specific override needed */
 }
