@@ -49,11 +49,11 @@ const MessageInput: React.FC<MessageInputProps> = ({
         >
           <svg
             viewBox="0 0 24 24"
-            width="94%"
-            height="94%"
+            width="82%"
+            height="82%"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2.2"
+            strokeWidth="2"
             shapeRendering="geometricPrecision"
             preserveAspectRatio="xMidYMid meet"
           >
