@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import SideMenu from './shared/components/SideMenu'
 import { ChatPage } from './features/chat'
+import { SettingsPage } from './features/settings'
 import './App.css'
 
 function App() {
@@ -52,15 +53,7 @@ function App() {
           </div>
         );
       case 'settings':
-        return (
-          <div className="content-wrapper">
-            <h1>Settings</h1>
-            <p className="subtitle">Configure your preferences</p>
-            <div className="coming-soon">
-              <p>Settings panel coming soon!</p>
-            </div>
-          </div>
-        );
+        return <SettingsPage />;
       default:
         return (
           <div className="content-wrapper">
