@@ -1,0 +1,40 @@
+@localOllamaServer = http://127.0.0.1:11434
+
+### Show model information
+POST {{localOllamaServer}}/api/show 
+Content-Type: application/json
+
+{
+  "name": "llama3.2"
+}
+
+### List local models
+GET {{localOllamaServer}}/api/tags
+
+### Generate a completion
+POST {{localOllamaServer}}/api/generate
+Content-Type: application/json
+
+{
+  "model": "llama3.2",
+  "prompt": "Are you already up and running?",
+  "stream": false
+}
+
+### Chat completion request
+POST {{localOllamaServer}}/api/chat
+Content-Type: application/json
+
+{
+  "model": "llama3.2",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Hello, how are you?"
+    }
+  ],
+  "max_tokens": 512,
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "stream": false
+}

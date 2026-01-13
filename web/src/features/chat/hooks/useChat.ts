@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import type { Chat, Message, User, ChatState } from '../types';
+import { ollamaService } from '../services/ollamaService';
 
 const mockUser: User = {
   id: 'user-1',
@@ -72,13 +73,19 @@ export const useChat = () => {
       isLoading: true,
     }));
 
-    // Simulate AI response
+    // Get AI response from Ollama
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+      // Convert chat messages to Ollama format
+      const ollamaMessages = updatedChat.messages.map(msg => ({
+        role: msg.type === 'user' ? 'user' as const : 'assistant' as const,
+        content: msg.content,
+      }));
+
+      const responseContent = await ollamaService.chat(ollamaMessages);
       
       const assistantMessage: Message = {
         id: `msg-${Date.now()}-assistant`,
-        content: `This is a mock response to: "${content}". In a real implementation, this would be connected to an AI service.`,
+        content: responseContent,
         timestamp: new Date(),
         sender: mockAssistant,
         type: 'assistant',
@@ -101,10 +108,12 @@ export const useChat = () => {
         };
       });
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to get response';
+      
       setChatState(prev => ({
         ...prev,
         isLoading: false,
-        error: 'Failed to get response',
+        error: errorMessage,
       }));
     }
   }, [chatState.currentChat, createNewChat]);
