@@ -46,11 +46,9 @@ export class OllamaService {
   }
 
   async chat(messages: OllamaMessage[], model: string = 'llama3.2'): Promise<string> {
-    // Try /api/chat first (newer Ollama versions)
     try {
       return await this.chatWithChatEndpoint(messages, model);
     } catch (error) {
-      // Fallback to /api/generate (older Ollama versions or if chat fails)
       console.log('Chat endpoint failed, falling back to generate endpoint');
       return await this.chatWithGenerateEndpoint(messages, model);
     }
