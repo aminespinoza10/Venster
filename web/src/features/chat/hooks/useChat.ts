@@ -81,7 +81,9 @@ export const useChat = () => {
         content: msg.content,
       }));
 
-      const responseContent = await ollamaService.chat(ollamaMessages);
+      // Get selected model from localStorage
+      const selectedModel = localStorage.getItem('selectedModel') || 'llama3.2';
+      const responseContent = await ollamaService.chat(ollamaMessages, selectedModel);
       
       const assistantMessage: Message = {
         id: `msg-${Date.now()}-assistant`,
