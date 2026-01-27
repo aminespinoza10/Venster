@@ -2,6 +2,7 @@ import { useState } from 'react';
 import SideMenu from './shared/components/SideMenu'
 import { ChatPage } from './features/chat'
 import { SettingsPage } from './features/settings'
+import { RAGPage } from './features/rag'
 import './App.css'
 
 function App() {
@@ -43,15 +44,7 @@ function App() {
           </div>
         );
       case 'localdocs':
-        return (
-          <div className="content-wrapper">
-            <h1>RAG (Retrieval-Augmented Generation)</h1>
-            <p className="subtitle">Chat with your local documents</p>
-            <div className="coming-soon">
-              <p>This feature is coming soon!</p>
-            </div>
-          </div>
-        );
+        return <RAGPage />;
       case 'settings':
         return <SettingsPage />;
       default:

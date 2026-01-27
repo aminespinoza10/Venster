@@ -1,0 +1,168 @@
+.rag-page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  padding: 2rem;
+}
+
+.rag-container {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.rag-container h1 {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.rag-container .subtitle {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.rag-section {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.rag-section h2 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 1.25rem;
+}
+
+.section-description {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.input-with-button {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.path-input,
+.number-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: 'Courier New', monospace;
+  transition: border-color 0.2s;
+}
+
+.input-with-button .path-input {
+  flex: 1;
+}
+
+.path-input:focus,
+.number-input:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+.input-hint {
+  display: block;
+  margin-top: 0.5rem;
+  color: #999;
+  font-size: 0.85rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.browse-button,
+.index-button,
+.save-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.browse-button {
+  background-color: #757575;
+  color: white;
+}
+
+.browse-button:hover {
+  background-color: #616161;
+}
+
+.index-button {
+  background-color: #2196F3;
+  color: white;
+}
+
+.index-button:hover:not(:disabled) {
+  background-color: #0b7dda;
+}
+
+.index-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.save-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #45a049;
+}
+
+.save-section {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.status-indicator.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-indicator.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status-indicator.info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
