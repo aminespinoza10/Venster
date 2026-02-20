@@ -44,6 +44,8 @@ const SettingsPage: React.FC = () => {
 
   const handleTestConnection = async () => {
     setConnectionStatus('testing');
+    // Update localStorage with current URL so ollamaService uses it
+    localStorage.setItem('ollamaUrl', ollamaUrl);
     try {
       const response = await fetch(`${ollamaUrl}/api/tags`);
       if (response.ok) {

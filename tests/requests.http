@@ -1,3 +1,6 @@
+# Ollama Remote Server address
+@remoteOllamaServer = http://192.168.68.87:11434
+# Ollama Local Server address
 @localOllamaServer = http://127.0.0.1:11434
 
 ### Show model information
@@ -9,7 +12,7 @@ Content-Type: application/json
 }
 
 ### List local models
-GET {{localOllamaServer}}/api/tags
+GET {{remoteOllamaServer}}/api/tags
 
 ### Generate a completion
 POST {{localOllamaServer}}/api/generate
