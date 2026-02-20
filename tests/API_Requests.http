@@ -1,0 +1,4 @@
+@localApiServer = http://localhost:8080
+
+### Test API connection
+GET {{localApiServer}}/health
