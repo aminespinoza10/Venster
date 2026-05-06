@@ -3,10 +3,12 @@ import './SettingsPage.css';
 import { ollamaService } from '../chat/services/ollamaService';
 
 const SettingsPage: React.FC = () => {
-  const [ollamaUrl, setOllamaUrl] = useState<string>('http://127.0.0.1:11434');
+  const [ollamaUrl, setOllamaUrl] = useState<string>('http://localhost:8080');
   const [connectionStatus, setConnectionStatus] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
-  const [availableModels, setAvailableModels] = useState<string[]>([]);
+  const [chatModels, setChatModels] = useState<string[]>([]);
+  const [embeddingModels, setEmbeddingModels] = useState<string[]>([]);
   const [selectedModel, setSelectedModel] = useState<string>('llama3.2');
+  const [selectedEmbeddingModel, setSelectedEmbeddingModel] = useState<string>('nomic-embed-text:latest');
   const [isLoadingModels, setIsLoadingModels] = useState<boolean>(false);
 
   // Load saved URL and model on mount
@@ -19,16 +21,29 @@ const SettingsPage: React.FC = () => {
     if (savedModel) {
       setSelectedModel(savedModel);
     }
+    const savedEmbeddingModel = localStorage.getItem('selectedEmbeddingModel');
+    if (savedEmbeddingModel) {
+      setSelectedEmbeddingModel(savedEmbeddingModel);
+    }
   }, []);
 
   // Fetch available models
   const fetchModels = async () => {
     setIsLoadingModels(true);
     try {
-      const models = await ollamaService.listModels();
-      setAvailableModels(models);
-      if (models.length > 0 && !models.includes(selectedModel)) {
-        setSelectedModel(models[0]);
+      const [chat, embedding] = await Promise.all([
+        ollamaService.listChatModels(),
+        ollamaService.listEmbeddingModels(),
+      ]);
+
+      setChatModels(chat);
+      setEmbeddingModels(embedding);
+
+      if (chat.length > 0 && !chat.includes(selectedModel)) {
+        setSelectedModel(chat[0]);
+      }
+      if (embedding.length > 0 && !embedding.includes(selectedEmbeddingModel)) {
+        setSelectedEmbeddingModel(embedding[0]);
       }
     } catch (error) {
       console.error('Error fetching models:', error);
@@ -64,6 +79,7 @@ const SettingsPage: React.FC = () => {
   const handleSave = () => {
     localStorage.setItem('ollamaUrl', ollamaUrl);
     localStorage.setItem('selectedModel', selectedModel);
+    localStorage.setItem('selectedEmbeddingModel', selectedEmbeddingModel);
     alert('Settings saved! Your chat will now use this Ollama server and selected model.');
   };
 
@@ -87,7 +103,7 @@ const SettingsPage: React.FC = () => {
               placeholder="http://localhost:11434"
               className="url-input"
             />
-            <span className="input-hint">Default: http://localhost:11434</span>
+            <span className="input-hint">Default: http://localhost:8080</span>
           </div>
           
           <div className="button-group">
@@ -117,22 +133,22 @@ const SettingsPage: React.FC = () => {
 
         <div className="settings-section">
           <h2>Model Selection</h2>
-          <p className="section-description">Choose which Ollama model to use for chat</p>
+          <p className="section-description">Choose chat and embedding models from your API endpoints</p>
           
           <div className="form-group">
-            <label>Available Models</label>
+            <label>Chat Models (GET /api/chatModels)</label>
             <div className="model-list-container">
               {isLoadingModels ? (
                 <div className="model-list-empty">Loading models...</div>
-              ) : availableModels.length === 0 ? (
-                <div className="model-list-empty">Test connection to load models</div>
+              ) : chatModels.length === 0 ? (
+                <div className="model-list-empty">No chat-capable models found</div>
               ) : (
                 <div className="model-list">
-                  {availableModels.map(model => (
+                  {chatModels.map(model => (
                     <label key={model} className="model-item">
                       <input
                         type="radio"
-                        name="model"
+                        name="chat-model"
                         value={model}
                         checked={selectedModel === model}
                         onChange={(e) => setSelectedModel(e.target.value)}
@@ -146,8 +162,40 @@ const SettingsPage: React.FC = () => {
             </div>
             <span className="input-hint">
               {isLoadingModels ? 'Loading models...' : 
-               availableModels.length > 0 ? `${availableModels.length} model(s) available` : 
-               'Test connection first to see available models'}
+               chatModels.length > 0 ? `${chatModels.length} chat model(s) available` : 
+               'Refresh models to load chat models'}
+            </span>
+          </div>
+
+          <div className="form-group">
+            <label>Embedding Models (GET /api/embedding)</label>
+            <div className="model-list-container">
+              {isLoadingModels ? (
+                <div className="model-list-empty">Loading models...</div>
+              ) : embeddingModels.length === 0 ? (
+                <div className="model-list-empty">No embedding-capable models found</div>
+              ) : (
+                <div className="model-list">
+                  {embeddingModels.map(model => (
+                    <label key={model} className="model-item">
+                      <input
+                        type="radio"
+                        name="embedding-model"
+                        value={model}
+                        checked={selectedEmbeddingModel === model}
+                        onChange={(e) => setSelectedEmbeddingModel(e.target.value)}
+                        className="model-radio"
+                      />
+                      <span className="model-name">{model}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+            <span className="input-hint">
+              {isLoadingModels ? 'Loading models...' :
+               embeddingModels.length > 0 ? `${embeddingModels.length} embedding model(s) available` :
+               'Refresh models to load embedding models'}
             </span>
           </div>
 

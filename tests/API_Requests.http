@@ -2,3 +2,23 @@
 
 ### Test API connection
 GET {{localApiServer}}/health
+
+### Get current Ollama models
+GET {{localApiServer}}/api/tags
+
+### Post a message to the Ollama server
+POST {{localApiServer}}/api/chat
+Content-Type: application/json
+
+{
+  "model": "llama3.2",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is the capital of France?"
+    }
+  ]
+}
+
+### Get available chat models
+GET {{localApiServer}}/api/chatModels

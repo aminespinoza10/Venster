@@ -1,5 +1,15 @@
 package models
 
+// ModelShowResponse represents the response from Ollama /api/show
+type ModelShowResponse struct {
+	Capabilities []string `json:"capabilities"`
+}
+
+// ModelShowRequest is the request body for Ollama /api/show
+type ModelShowRequest struct {
+	Name string `json:"name"`
+}
+
 // ChatRequest represents incoming chat request
 type ChatRequest struct {
 	Model    string          `json:"model"`

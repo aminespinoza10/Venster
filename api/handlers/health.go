@@ -11,7 +11,13 @@ func NewHealthHandler() *HealthHandler {
 	return &HealthHandler{}
 }
 
-// Check returns the health status of the API
+// Check godoc
+// @Summary      Health check
+// @Description  Returns the health status of the API
+// @Tags         health
+// @Produce      json
+// @Success      200  {object}  map[string]interface{}
+// @Router       /health [get]
 func (h *HealthHandler) Check(w http.ResponseWriter, r *http.Request) {
 	response := map[string]interface{}{
 		"status":  "healthy",

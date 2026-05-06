@@ -11,6 +11,35 @@ import (
 	"github.com/aminespinoza10/venster/api/models"
 )
 
+// ShowModel retrieves the capabilities of a specific model from Ollama
+func (s *OllamaService) ShowModel(modelName string) ([]string, error) {
+	url := fmt.Sprintf("%s/api/show", s.baseURL)
+
+	request := models.ModelShowRequest{Name: modelName}
+	jsonData, err := json.Marshal(request)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal request: %w", err)
+	}
+
+	resp, err := s.client.Post(url, "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		return nil, fmt.Errorf("failed to connect to Ollama: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(resp.Body)
+		return nil, fmt.Errorf("ollama API error: %d - %s", resp.StatusCode, string(body))
+	}
+
+	var showResp models.ModelShowResponse
+	if err := json.NewDecoder(resp.Body).Decode(&showResp); err != nil {
+		return nil, fmt.Errorf("failed to decode response: %w", err)
+	}
+
+	return showResp.Capabilities, nil
+}
+
 type OllamaService struct {
 	baseURL string
 	client  *http.Client
