@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Preguntas y Soporte
+    url: https://github.com/aminespinoza/Venster/discussions
+    about: Por favor, usa las Discusiones de GitHub para preguntas y soporte general
+  - name: Documentación
+    url: https://github.com/aminespinoza/Venster/blob/main/README.md
+    about: Consulta la documentación del proyecto
