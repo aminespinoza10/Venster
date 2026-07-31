@@ -1,0 +1,8 @@
+# Archivos y carpetas a ignorar en el build de Docker
+.env
+.env.local
+.git
+.gitignore
+*.md
+.DS_Store
+*.log

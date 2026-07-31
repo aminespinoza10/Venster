@@ -35,13 +35,7 @@ interface OllamaChatResponse {
 }
 
 export class OllamaService {
-  private baseUrl: string;
-  private apiBaseUrl: string;
-
-  constructor() {
-    this.baseUrl = this.getOllamaUrl();
-    this.apiBaseUrl = this.getApiUrl();
-  }
+  constructor() {}
 
   private getOllamaUrl(): string {
     return localStorage.getItem('ollamaUrl') || 'http://localhost:11434';

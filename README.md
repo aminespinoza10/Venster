@@ -10,16 +10,46 @@ It is just a small idea where I want to start playing around. It is a basic inte
 
 ## How do I use it?
 
-It is just a React application so just clone the repo
+### 🚀 Opción 1: Despliegue Rápido con Docker (Recomendado)
+
+El método más sencillo para ejecutar toda la aplicación (API + Web) es usar Docker:
 
 ```bash
+# Clonar el repositorio
 git clone https://github.com/aminespinoza10/Venster.git
+cd Venster
+
+# Ejecutar el script de despliegue
+./deploy.sh
 ```
 
-Then go to the **web** folder and run the client.
+El script te guiará a través de un menú interactivo donde podrás:
+- ✅ Arrancar ambos servicios con un solo comando
+- 📊 Ver logs en tiempo real
+- 🔄 Reiniciar servicios
+- 🛑 Detener todo cuando termines
 
+**Accede a la aplicación:**
+- Web: http://localhost
+- API: http://localhost:8080
+- Swagger: http://localhost:8080/swagger/
+
+📖 Para más detalles sobre el despliegue, consulta [DEPLOYMENT.md](DEPLOYMENT.md)
+
+### 🛠️ Opción 2: Desarrollo Manual
+
+Si prefieres ejecutar los componentes manualmente para desarrollo:
+
+**Backend (API en Go):**
+```bash
+cd api
+go run main.go
+```
+
+**Frontend (React):**
 ```bash
 cd web
+npm install
 npm run dev
 ```
 
@@ -35,6 +65,7 @@ Have fun!
 
 ## Roadmap
 
+* ✅ ~~Docker deployment for easy setup~~ (Completado)
 * Show installed models in the settings page to let the user pick which one to use
 * Display selected model in the chat window
 * Save all conversation in a **txt** file
