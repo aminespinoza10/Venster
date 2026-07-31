@@ -36,13 +36,19 @@ interface OllamaChatResponse {
 
 export class OllamaService {
   private baseUrl: string;
+  private apiBaseUrl: string;
 
   constructor() {
     this.baseUrl = this.getOllamaUrl();
+    this.apiBaseUrl = this.getApiUrl();
   }
 
   private getOllamaUrl(): string {
     return localStorage.getItem('ollamaUrl') || 'http://localhost:11434';
+  }
+
+  private getApiUrl(): string {
+    return localStorage.getItem('apiUrl') || 'http://localhost:8080';
   }
 
   async chat(messages: OllamaMessage[], model: string = 'llama3.2'): Promise<string> {
@@ -130,18 +136,39 @@ export class OllamaService {
   }
 
   async listModels(): Promise<string[]> {
+    return this.listChatModels();
+  }
+
+  async listChatModels(): Promise<string[]> {
     try {
-      const url = `${this.getOllamaUrl()}/api/tags`;
+      const url = `${this.getApiUrl()}/api/chatModels`;
       const response = await fetch(url);
       
       if (!response.ok) {
-        throw new Error('Failed to fetch models');
+        throw new Error('Failed to fetch chat models');
       }
 
       const data = await response.json();
       return data.models?.map((model: any) => model.name) || [];
     } catch (error) {
-      console.error('Error fetching models:', error);
+      console.error('Error fetching chat models:', error);
+      return [];
+    }
+  }
+
+  async listEmbeddingModels(): Promise<string[]> {
+    try {
+      const url = `${this.getApiUrl()}/api/embedding`;
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch embedding models');
+      }
+
+      const data = await response.json();
+      return data.models?.map((model: any) => model.name) || [];
+    } catch (error) {
+      console.error('Error fetching embedding models:', error);
       return [];
     }
   }

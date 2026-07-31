@@ -1,0 +1,140 @@
+basePath: /
+definitions:
+  models.ChatRequest:
+    properties:
+      messages:
+        items:
+          $ref: '#/definitions/models.OllamaMessage'
+        type: array
+      model:
+        type: string
+    type: object
+  models.ChatResponse:
+    properties:
+      model:
+        type: string
+      response:
+        type: string
+    type: object
+  models.ErrorResponse:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+    type: object
+  models.OllamaMessage:
+    properties:
+      content:
+        type: string
+      role:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API server for Venster, a chat interface powered by Ollama.
+  title: Venster API
+  version: "1.0"
+paths:
+  /api/chat:
+    post:
+      consumes:
+      - application/json
+      description: Sends messages to the Ollama service and returns the model's response
+      parameters:
+      - description: Chat request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ChatRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ChatResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Send a chat message
+      tags:
+      - chat
+  /api/chatModels:
+    get:
+      description: Returns available Ollama models filtered to those with completion
+        capability
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: List chat-capable models
+      tags:
+      - models
+  /api/embedding:
+    get:
+      description: Returns available Ollama models filtered to those with embedding
+        capability
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: List embedding-capable models
+      tags:
+      - models
+  /api/tags:
+    get:
+      description: Returns all available Ollama models
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: List all models
+      tags:
+      - models
+  /health:
+    get:
+      description: Returns the health status of the API
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Health check
+      tags:
+      - health
+swagger: "2.0"
